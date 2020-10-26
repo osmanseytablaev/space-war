@@ -1,6 +1,6 @@
 import pygame
 import random
-class Space:
+class Ship:
     def __init__(self, game, x, y):
         self.x = x
         self.game = game
@@ -31,22 +31,22 @@ class Game:
         self.H = H
         pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((W, H))
-        space = Space(self, 450, 600)
+        ship = Ship(self, 450, 600)
         bullet = None
         while True:
-            space.draw()
+            ship.draw()
             pygame.display.flip()
             self.screen.fill((0, 0, 0))
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:  
-                space.x -= 2 if space.x > 20 else 0
+                ship.x -= 2 if ship.x > 20 else 0
             elif pressed[pygame.K_RIGHT]:
-                space.x += 2 if space.x < W - 20 else 0
+                ship.x += 2 if ship.x < W - 20 else 0
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     exit() 
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
-                    self.bullets.append(Bullet(self, space.x, space.y))
+                    self.bullets.append(Bullet(self, ship.x, ship.y))
             for bullet in self.bullets:
                 bullet.draw()
 if __name__ == '__main__':
