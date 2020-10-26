@@ -1,59 +1,65 @@
 import pygame
 import random
-from pygame.locals import *
-pygame.init()
-W = 900
-H = 700
-space_x = 450
-space_y = 600
-enemyX = random.randint(1, 900)
-enemyY = 0.99
-pygame.display.set_caption("SPACE WAR")
-display_surface = pygame.display.set_mode((W, H))
-shoot = pygame.image.load('shoot.jpg')
-bullet_state = "ready"
 class Space:
-    def __init__(self, position_x, position_y):    
-        self.position_x = position_x
-        self.position_y = position_y
-        self.bulletX = self.position_x
-        self.bulletY = self.position_y
-    def show(self):
-        space = pygame.draw.rect(display_surface, (255, 255, 255), (self.position_x, self.position_y, 100, 75))
-    def fire(self):
-        display_surface.blit(shoot, (self.bulletX, self.bulletY))
-        self.bulletX = self.position_x
-        self.bulletY -= 10
-        print(self.bulletY)
-        clock.tick(60)
-space = Space(450, 600)
-while True:
-    for i in pygame.event.get():
-        if i.type == pygame.QUIT:
-            exit()
-        if i.type == pygame.KEYDOWN:    
-            if i.key == pygame.K_LEFT:
-                space.position_x -= 10 if space.position_x > 20 else 0
-            if i.key == pygame.K_RIGHT:
-                space.position_x += 10 if space.position_x < W - 20 else 0
-            if i.key == pygame.K_SPACE:
-                bullet_state = "fire"
-    clock = pygame.time.Clock()
-    enemy = pygame.image.load('enemy.jpg')
-    display_surface.blit(enemy, (enemyX, enemyY))
-    pygame.display.update()
-    display_surface.fill((0,0,0))
-    enemyY += 0.50
-    if bullet_state == "fire":
-        space.fire()
-    space.show()
+    def __init__(self, game, x, y):
+        self.x = x
+        self.game = game
+        self.y = y
+
+    def draw(self):
+        pygame.draw.rect(self.game.screen,
+                         (0, 77, 255),
+                         pygame.Rect(self.x, self.y, 100, 75))
+class Bullet:
+    def __init__(self, game, x, y):
+        self.x = x
+        self.y = y
+        self.game = game
+    def draw(self):
+        pygame.draw.rect(self.game.screen,
+                         (254, 52, 110), 
+                         pygame.Rect(self.x, self.y, 2, 4))
+        self.y -= 5 
+class Game:
+    bullets = []
+    bullet_state = "ready"
+    enemyX = random.randint(1, 900)
+    enemyY = 0.99
+    def __init__(self, W, H):
+        pygame.init()
+        self.W = W
+        self.H = H
+        pygame.display.set_caption("SPACE WAR")
+        self.screen = pygame.display.set_mode((W, H))
+        space = Space(self, 450, 600)
+        bullet = None
+        while True:
+            space.draw()
+            pygame.display.flip()
+            self.screen.fill((0, 0, 0))
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_LEFT]:  
+                space.x -= 2 if space.x > 20 else 0
+            elif pressed[pygame.K_RIGHT]:
+                space.x += 2 if space.x < W - 20 else 0
+            for i in pygame.event.get():
+                if i.type == pygame.QUIT:
+                    exit() 
+                if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
+                    self.bullets.append(Bullet(self, space.x, space.y))
+            for bullet in self.bullets:
+                bullet.draw()
+if __name__ == '__main__':
+    game = Game(900, 700)
+#Проблема-1
 #Моя проблема была в том что когда я писал движение пули в
 #if событии оно у меня не выполнялось бесконечно тоесть в while
-#решение: создать переменную с любым значением
+#Решение: создать переменную с любым значением
 #и изменить значение в событии и потом в while пишем если
 #переменная равно тому значению то выполняем наш код
 
 
-
-
-
+#Проблема-2
+#Когда я писал несколько пуль и все остальное у меня ничего не поэвлялось
+#Дело в том что когда я рисую спрайты *на pygame* мне нужно обновлять екран
+#Решение: добавить метод display.flip()
