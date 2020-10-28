@@ -1,25 +1,29 @@
 import pygame
 import random
+YELLOW = (225, 225, 0)
 class Ship:
-    def __init__(self, game, x, y):
-        self.x = x
+    def __init__(self, game, ship_x, ship_y):
+        self.ship_x = ship_x
+        self.ship_y = ship_y
         self.game = game
-        self.y = y
-
-    def draw(self):
-        pygame.draw.rect(self.game.screen,
-                         (0, 77, 255),
-                         pygame.Rect(self.x, self.y, 100, 75))
-class Bullet:
-    def __init__(self, game, x, y):
-        self.x = x
-        self.y = y
+    def show(self):
+        ship = pygame.image.load('ship.png')
+        self.game.screen.blit(ship, (self.ship_x, self.ship_y))
+class Line:
+    def __init__(self, game, line_x, line_y):
+        self.line_x = line_x
+        self.line_y = line_y
+        self.bullet_x = self.line_x
+        self.bullet_y = self.line_y
         self.game = game
-    def draw(self):
+    def show(self):
+        line = pygame.image.load('line.png')
+        self.game.screen.blit(line, (self.line_x, self.line_y))
+    def fire(self):
         pygame.draw.rect(self.game.screen,
                          (254, 52, 110), 
-                         pygame.Rect(self.x, self.y, 2, 4))
-        self.y -= 5 
+                         pygame.Rect(self.bullet_x, self.bullet_y, 2, 4))
+        self.bullet_y -= 5
 class Game:
     bullets = []
     bullet_state = "ready"
@@ -31,24 +35,28 @@ class Game:
         self.H = H
         pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((W, H))
-        ship = Ship(self, 450, 600)
         bullet = None
+        ship = Ship(self, 450, 650)
+        line = Line(self, 474, 650)
         while True:
-            ship.draw()
+            ship.show()
+            line.show()
             pygame.display.flip()
             self.screen.fill((0, 0, 0))
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:  
-                ship.x -= 2 if ship.x > 20 else 0
+                ship.ship_x -= 2 if ship.ship_x > 20 else 0
+                line.line_x -= 2 if line.line_x > 20 else 0
             elif pressed[pygame.K_RIGHT]:
-                ship.x += 2 if ship.x < W - 20 else 0
+                ship.ship_x += 2 if ship.ship_x < W - 20 else 0
+                line.line_x += 2 if line.line_x < W - 20 else 0
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     exit() 
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
-                    self.bullets.append(Bullet(self, ship.x, ship.y))
+                    self.bullets.append(Line(self, line.line_x, line.line_y))
             for bullet in self.bullets:
-                bullet.draw()
+                bullet.fire()
 if __name__ == '__main__':
     game = Game(900, 700)
 #Проблема-1
