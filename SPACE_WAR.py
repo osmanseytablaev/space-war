@@ -6,24 +6,18 @@ class Ship:
         self.ship_x = ship_x
         self.ship_y = ship_y
         self.game = game
+        self.gun_x = self.ship_x + 24
+        self.gun_y = self.ship_y
     def show(self):
+        self.gun_x = self.ship_x
+        self.gun_y = self.ship_y
         ship = pygame.image.load('ship.png')
         self.game.screen.blit(ship, (self.ship_x, self.ship_y))
-class Line:
-    def __init__(self, game, line_x, line_y):
-        self.line_x = line_x
-        self.line_y = line_y
-        self.bullet_x = self.line_x
-        self.bullet_y = self.line_y
-        self.game = game
-    def show(self):
-        line = pygame.image.load('line.png')
-        self.game.screen.blit(line, (self.line_x, self.line_y))
     def fire(self):
         pygame.draw.rect(self.game.screen,
                          (254, 52, 110), 
-                         pygame.Rect(self.bullet_x, self.bullet_y, 2, 4))
-        self.bullet_y -= 5
+                         pygame.Rect(self.gun_x, self.gun_y, 2, 4))
+        self.gun_y -= 5
 class Game:
     bullets = []
     bullet_state = "ready"
@@ -37,24 +31,20 @@ class Game:
         self.screen = pygame.display.set_mode((W, H))
         bullet = None
         ship = Ship(self, 450, 650)
-        line = Line(self, 474, 650)
         while True:
             ship.show()
-            line.show()
             pygame.display.flip()
             self.screen.fill((0, 0, 0))
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:  
                 ship.ship_x -= 2 if ship.ship_x > 20 else 0
-                line.line_x -= 2 if line.line_x > 20 else 0
             elif pressed[pygame.K_RIGHT]:
                 ship.ship_x += 2 if ship.ship_x < W - 20 else 0
-                line.line_x += 2 if line.line_x < W - 20 else 0
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     exit() 
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
-                    self.bullets.append(Line(self, line.line_x, line.line_y))
+                    self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
             for bullet in self.bullets:
                 bullet.fire()
 if __name__ == '__main__':
