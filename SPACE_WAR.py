@@ -37,14 +37,33 @@ class Enemy:
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 0.20
 
+
+class Clon:
+    def __init__(self, game2, clon_x, clon_y):
+        self.clon_x = clon_x
+        self.clon_y = clon_y
+        self.game = game2
+
+    def attack(self):
+        clon_enemy = pygame.image.load('clon_enemy.png')
+        self.game.screen.blit(clon_enemy, (self.clon_x, self.clon_y))
+        self.clon_y += 0.25
+
 class Game:
     bullets = []
     enemies = []
-
+    def apear_enemy(self):
+        game_time = time.clock()
+        print('game_time', game_time)
+        if game_time >= 1:  # Если прошла 1 секунда
+            self.enemy_timer += 1 # Увеличиваем счетчкик на 1
+            print('+= 1', self.enemy_timer)
+        if self.enemy_timer >= 3: # Если счетчик равен 3 секундам
+            self.enemy_timer = 0 # Сбрасываем счетчик на 0
+            print('= 0', self.enemy_timer)
     def check_exit(self):
-        current_time = time.clock()
-        print(current_time)
-        if current_time >= 5:
+        time.clock()
+        if time.clock() >= 30:
             return True
         else:
             return False
@@ -52,17 +71,17 @@ class Game:
         pygame.init()
         self.w = w
         self.h = h
-        pygame.display.set_caption("SPACE wAR")
+        pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((w, h))
         bullet = None
         ship = Ship(self, 450, 650)
         enemy = Enemy(self, random.randint(1, 900), 0.99)
-        self.start_time = 0
-        game =  True
-        while game == True:
+        self.enemy_timer = 0
+        while True:
             if self.check_exit():
                 print('Game end')
                 break
+            self.apear_enemy()
             ship.show()
             enemy.attack()
             pygame.display.flip()
@@ -71,7 +90,7 @@ class Game:
             if pressed[pygame.K_LEFT]:
                 ship.ship_x -= 2 if ship.ship_x > 20 else 0
             elif pressed[pygame.K_RIGHT]:
-                ship.ship_x += 2 if ship.ship_x < self.w - 20 else 0
+                 ship.ship_x += 2 if ship.ship_x < self.w - 20 else 0
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     exit()
