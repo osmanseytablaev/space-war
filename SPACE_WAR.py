@@ -1,7 +1,7 @@
 import pygame
 import random
 import time
-
+import datetime as dt
 import self as self
 
 
@@ -32,38 +32,19 @@ class Enemy:
         self.enemy_y = enemy_y
         self.game = game1
 
-    def attack(self):
+    def show(self):
         enemy = pygame.image.load('enemy.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 0.20
 
 
-class Clon:
-    def __init__(self, game2, clon_x, clon_y):
-        self.clon_x = clon_x
-        self.clon_y = clon_y
-        self.game = game2
-
-    def attack(self):
-        clon_enemy = pygame.image.load('clon_enemy.png')
-        self.game.screen.blit(clon_enemy, (self.clon_x, self.clon_y))
-        self.clon_y += 0.25
 
 class Game:
     bullets = []
     enemies = []
-    def apear_enemy(self):
-        game_time = time.clock()
-        print('game_time', game_time)
-        if game_time >= 1:  # Если прошла 1 секунда
-            self.enemy_timer += 1 # Увеличиваем счетчкик на 1
-            print('+= 1', self.enemy_timer)
-        if self.enemy_timer >= 3: # Если счетчик равен 3 секундам
-            self.enemy_timer = 0 # Сбрасываем счетчик на 0
-            print('= 0', self.enemy_timer)
     def check_exit(self):
-        time.clock()
-        if time.clock() >= 30:
+        date_game = dt.datetime.now() - self.time_game
+        if date_game.seconds >= 300: # 60 * 5 = 300 sec = 5 min game
             return True
         else:
             return False
@@ -76,14 +57,17 @@ class Game:
         bullet = None
         ship = Ship(self, 450, 650)
         enemy = Enemy(self, random.randint(1, 900), 0.99)
-        self.enemy_timer = 0
+        self.time = dt.datetime.now()
+        self.time_game = dt.datetime.now()
         while True:
             if self.check_exit():
                 print('Game end')
                 break
-            self.apear_enemy()
+            date = dt.datetime.now() - self.time
+            if date.seconds >= 5:
+                print("5 sec")
+                self.time = dt.datetime.now()
             ship.show()
-            enemy.attack()
             pygame.display.flip()
             self.screen.fill((0, 0, 0))
             pressed = pygame.key.get_pressed()
