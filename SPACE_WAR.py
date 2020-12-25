@@ -1,6 +1,5 @@
 import pygame
 import random
-import time
 import datetime as dt
 import self as self
 
@@ -55,8 +54,9 @@ class Game:
         pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((w, h))
         bullet = None
+        enemy_state = None
         ship = Ship(self, 450, 650)
-        enemy = Enemy(self, random.randint(1, 900), 0.99)
+        enemy = Enemy(self, random.randint(1, 500), 0.99)
         self.time = dt.datetime.now()
         self.time_game = dt.datetime.now()
         while True:
@@ -65,7 +65,7 @@ class Game:
                 break
             date = dt.datetime.now() - self.time
             if date.seconds >= 5:
-                print("5 sec")
+                self.enemies.append(Enemy(self, random.randint(1, 800), enemy.enemy_y))
                 self.time = dt.datetime.now()
             ship.show()
             pygame.display.flip()
@@ -82,8 +82,8 @@ class Game:
                     self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
             for bullet in self.bullets:
                 bullet.fire()
-
-
+            for enemy_state in self.enemies:
+                enemy_state.show()
 if __name__ == '__main__':
     game = Game(900, 700)
 # Проблема-1
