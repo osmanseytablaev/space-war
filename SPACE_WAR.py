@@ -1,6 +1,7 @@
 import pygame
 import random
 import datetime as dt
+import math
 import self as self
 
 
@@ -30,13 +31,21 @@ class Enemy:
         self.enemy_x = enemy_x
         self.enemy_y = enemy_y
         self.game = game1
+        self.size = 40
 
     def show(self):
         enemy = pygame.image.load('enemy.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 0.20
 
-
+    def el_destroyer0_0(self, game):
+        for bullet in game.bullets:
+            if (bullet.gun_x < self.enemy_x + self.size and
+                    bullet.gun_x > self.enemy_x - self.size and
+                    bullet.gun_y < self.enemy_y + self.size and
+                    bullet.gun_y > self.enemy_y - self.size):
+                game.bullets.remove(bullet)
+                game.enemies.remove(self)
 
 class Game:
     bullets = []
@@ -51,9 +60,9 @@ class Game:
         pygame.init()
         self.w = w
         self.h = h
+        bullet = None
         pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((w, h))
-        bullet = None
         enemy_state = None
         ship = Ship(self, 450, 650)
         enemy = Enemy(self, random.randint(1, 500), 0.99)
@@ -82,8 +91,12 @@ class Game:
                     self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
             for bullet in self.bullets:
                 bullet.fire()
+                if ship.gun_y >= enemy.enemy_y:
+                    enemy.enemy_x = 1200
+                    ship.gun_x = 1200
             for enemy_state in self.enemies:
                 enemy_state.show()
+                enemy_state.el_destroyer0_0(self)
 if __name__ == '__main__':
     game = Game(900, 700)
 # Проблема-1
