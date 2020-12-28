@@ -4,7 +4,6 @@ import datetime as dt
 import math
 import self as self
 
-
 class Ship:
     def __init__(self, game1, ship_x, ship_y):
         self.ship_x = ship_x
@@ -40,12 +39,13 @@ class Enemy:
 
     def el_destroyer0_0(self, game):
         for bullet in game.bullets:
-            if (bullet.gun_x < self.enemy_x + self.size and
-                    bullet.gun_x > self.enemy_x - self.size and
-                    bullet.gun_y < self.enemy_y + self.size and
-                    bullet.gun_y > self.enemy_y - self.size):
+            if (self.enemy_x + self.size > bullet.gun_x > self.enemy_x - self.size and
+                    self.enemy_y + self.size > bullet.gun_y > self.enemy_y - self.size):
                 game.bullets.remove(bullet)
                 game.enemies.remove(self)
+                pygame.mixer.music.load('boom2.mp3')
+                pygame.mixer.music.play()
+
 
 class Game:
     bullets = []
@@ -56,6 +56,7 @@ class Game:
             return True
         else:
             return False
+
     def __init__(self, w, h):
         pygame.init()
         self.w = w
@@ -89,6 +90,8 @@ class Game:
                     exit()
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
                     self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
+                    pygame.mixer.music.load('boom.mp3')
+                    pygame.mixer.music.play()
             for bullet in self.bullets:
                 bullet.fire()
                 if ship.gun_y >= enemy.enemy_y:
