@@ -1,8 +1,7 @@
 import pygame
 import random
 import datetime as dt
-import math
-import self as self
+
 
 class Ship:
     def __init__(self, game1, ship_x, ship_y):
@@ -45,30 +44,34 @@ class Enemy:
                 game.enemies.remove(self)
                 pygame.mixer.music.load('boom2.mp3')
                 pygame.mixer.music.play()
+                return True
 
 
 class Game:
     bullets = []
     enemies = []
+
     def check_exit(self):
         date_game = dt.datetime.now() - self.time_game
-        if date_game.seconds >= 300: # 60 * 5 = 300 sec = 5 min game
+        if date_game.seconds >= 300:  # 60 * 5 = 300 sec = 5 min game
             return True
         else:
             return False
 
-    def __init__(self, w, h):
+    def __init__(self, w, h):  # Constructor
         pygame.init()
+        pygame.mixer.music.load('A4.mp3')
+        pygame.mixer.music.play()
         self.w = w
         self.h = h
-        bullet = None
         pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((w, h))
-        enemy_state = None
         ship = Ship(self, 450, 650)
         enemy = Enemy(self, random.randint(1, 500), 0.99)
         self.time = dt.datetime.now()
         self.time_game = dt.datetime.now()
+        self.score_value = 0
+        self.YELLOW = 255, 255, 0
         while True:
             if self.check_exit():
                 print('Game end')
@@ -77,6 +80,10 @@ class Game:
             if date.seconds >= 5:
                 self.enemies.append(Enemy(self, random.randint(1, 800), enemy.enemy_y))
                 self.time = dt.datetime.now()
+            f1 = pygame.font.SysFont('serif', 16)
+            text1 = f1.render("Score:" + str(self.score_value), True,
+                              self.YELLOW)
+            self.screen.blit(text1, (820, 670))
             ship.show()
             pygame.display.flip()
             self.screen.fill((0, 0, 0))
@@ -84,7 +91,7 @@ class Game:
             if pressed[pygame.K_LEFT]:
                 ship.ship_x -= 2 if ship.ship_x > 20 else 0
             elif pressed[pygame.K_RIGHT]:
-                 ship.ship_x += 2 if ship.ship_x < self.w - 20 else 0
+                ship.ship_x += 2 if ship.ship_x < self.w - 20 else 0
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     exit()
@@ -94,14 +101,15 @@ class Game:
                     pygame.mixer.music.play()
             for bullet in self.bullets:
                 bullet.fire()
-                if ship.gun_y >= enemy.enemy_y:
-                    enemy.enemy_x = 1200
-                    ship.gun_x = 1200
             for enemy_state in self.enemies:
                 enemy_state.show()
-                enemy_state.el_destroyer0_0(self)
+                if enemy_state.el_destroyer0_0(self):
+                    self.score_value += 1
+                    self.screen.blit(text1, (820, 670))
+
+
 if __name__ == '__main__':
-    game = Game(900, 700)
+    Game(900, 700)
 # Проблема-1
 # Моя проблема была в том что когда я писал движение пули в
 # if событии оно у меня не выполнялось бесконечно тоесть в while
