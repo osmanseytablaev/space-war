@@ -64,10 +64,8 @@ class Game:
         pygame.mixer.music.play()
         self.w = w
         self.h = h
-        bullet = None
         pygame.display.set_caption("SPACE WAR")
         self.screen = pygame.display.set_mode((w, h))
-        enemy_state = None
         ship = Ship(self, 450, 650)
         enemy = Enemy(self, random.randint(1, 500), 0.99)
         self.time = dt.datetime.now()
@@ -75,7 +73,6 @@ class Game:
         self.score_value = 0
         self.YELLOW = 255, 255, 0
         while True:
-            date = dt.datetime.now() - self.time
             if self.check_exit():
                 print('Game end')
                 break
@@ -109,8 +106,10 @@ class Game:
                 if enemy_state.el_destroyer0_0(self):
                     self.score_value += 1
                     self.screen.blit(text1, (820, 670))
+
+
 if __name__ == '__main__':
-    game = Game(900, 700)
+    Game(900, 700)
 # Проблема-1
 # Моя проблема была в том что когда я писал движение пули в
 # if событии оно у меня не выполнялось бесконечно тоесть в while
