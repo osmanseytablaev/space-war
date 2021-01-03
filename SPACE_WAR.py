@@ -58,7 +58,7 @@ class Game:
         else:
             return False
 
-    def __init__(self, w, h):
+    def __init__(self, w, h):  # Constructor
         pygame.init()
         pygame.mixer.music.load('A4.mp3')
         pygame.mixer.music.play()
