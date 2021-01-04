@@ -14,7 +14,7 @@ class Ship:
     def show(self):
         self.gun_x = self.ship_x
         self.gun_y = self.ship_y
-        ship = pygame.image.load('ship.png')
+        ship = pygame.image.load('Images/ship.png')
         self.game.screen.blit(ship, (self.ship_x, self.ship_y))
 
     def fire(self):
@@ -32,7 +32,7 @@ class Enemy:
         self.size = 40
 
     def show(self):
-        enemy = pygame.image.load('enemy.png')
+        enemy = pygame.image.load('Images/enemy.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 0.20
 
@@ -42,7 +42,7 @@ class Enemy:
                     self.enemy_y + self.size > bullet.gun_y > self.enemy_y - self.size):
                 game.bullets.remove(bullet)
                 game.enemies.remove(self)
-                pygame.mixer.music.load('boom2.mp3')
+                pygame.mixer.music.load('Audio/boom2.mp3')
                 pygame.mixer.music.play()
                 return True
 
@@ -60,7 +60,7 @@ class Game:
 
     def __init__(self, w, h):  # Constructor
         pygame.init()
-        pygame.mixer.music.load('A4.mp3')
+        pygame.mixer.music.load('Audio/A4.mp3')
         pygame.mixer.music.play()
         self.w = w
         self.h = h
@@ -97,7 +97,7 @@ class Game:
                     exit()
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
                     self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
-                    pygame.mixer.music.load('boom.mp3')
+                    pygame.mixer.music.load('Audio/boom.mp3')
                     pygame.mixer.music.play()
             for bullet in self.bullets:
                 bullet.fire()
