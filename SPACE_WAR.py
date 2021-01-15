@@ -97,7 +97,7 @@ class Game:
                     exit()
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
                     self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
-                    pygame.mixer.music.load('Audio/boom.mp3')
+                    pygame.mixer.music.load("Audio/boom.mp3")
                     pygame.mixer.music.play()
             for bullet in self.bullets:
                 bullet.fire()
