@@ -42,7 +42,7 @@ while True:
         x -= 10 if x > 20 else 0
     if keys[pygame.K_RIGHT] :
         x += 10 if x < W - 20 else 0
-    display_surface.fill((0,0,0))
+    display_surface.fill((0, 0, 0))
     space = pygame.image.load('spaceship.jpg')
     display_surface.blit(space, (x, y))
     pygame.display.update()
