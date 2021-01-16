@@ -45,8 +45,7 @@
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RunManager">
-    <configuration name="SPACE_WAR" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SPACE-WAR" />
+    <configuration name="SPACE_WAR.py" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -57,6 +56,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SPACE_WAR.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -66,11 +66,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.SPACE_WAR" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -102,10 +97,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="392" y="194" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608753131051">
+    <state x="392" y="194" width="1084" height="709" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610813128475">
       <screen x="0" y="36" width="1920" height="1044" />
     </state>
-    <state x="392" y="194" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.36.1920.1044@0.36.1920.1044" timestamp="1608753131051" />
+    <state x="392" y="194" width="1084" height="709" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.36.1920.1044@0.36.1920.1044" timestamp="1610813128475" />
     <state x="711" y="360" width="488" height="393" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609272232596">
       <screen x="0" y="36" width="1920" height="1044" />
     </state>
