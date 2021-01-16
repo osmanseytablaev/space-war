@@ -46,6 +46,6 @@ while True:
     space = pygame.image.load('spaceship.jpg')
     display_surface.blit(space, (x, y))
     pygame.display.update()
-    
+
 
 
