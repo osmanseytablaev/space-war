@@ -45,10 +45,10 @@ def show_enemy(self, enemy_y=None):
 
 
 def el_destroyer0_0(self, game):
-    for bullet in game.bullets:
-        if (enemy_x + size > bullet.gun_x > enemy_x - size and
-                enemy_y + size > bullet.gun_y > enemy_y - size):
-            bullets.remove(bullet)
+    for rocket in game.bullets:
+        if (enemy_x + size > rocket.gun_x > enemy_x - size and
+                enemy_y + size > rocket.gun_y > enemy_y - size):
+            bullets.remove(rocket)
             enemies.remove(self)
             pygame.mixer.music.load('Audio/boom2.mp3')
             pygame.mixer.music.play()
@@ -90,8 +90,8 @@ while True:
             bullets.append((gun_x, gun_y))
             pygame.mixer.music.load('Audio/boom.mp3')
             pygame.mixer.music.play()
-    for bullet in bullets:
-        bullet.fire()
+    for rocket in bullets:
+        rocket.fire()
     for enemy_state in enemies:
         enemy_state.show_enemy()
         if enemy_state.el_destroyer0_0():
