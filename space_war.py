@@ -15,7 +15,7 @@ class Ship:
     def show(self):
         self.gun_x = self.ship_x
         self.gun_y = self.ship_y
-        ship = pygame.image.load('Images/ship.png')
+        ship = pygame.image.load('images/ship.png')
         self.game.screen.blit(ship, (self.ship_x, self.ship_y))
 
     def fire(self):
@@ -33,9 +33,9 @@ class Enemy:
         self.size = 40
 
     def show(self):
-        enemy = pygame.image.load('Images/enemy.png')
+        enemy = pygame.image.load('images/enemy.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
-        self.enemy_y += 0.35
+        self.enemy_y += 0.40
 
     def el_destroyer0_0(self, game):
         for bullet in game.bullets:
@@ -43,7 +43,7 @@ class Enemy:
                     self.enemy_y + self.size > bullet.gun_y > self.enemy_y - self.size):
                 game.bullets.remove(bullet)
                 game.enemies.remove(self)
-                pygame.mixer.music.load('Audio/boom.ogg')
+                pygame.mixer.music.load('audio/boom.ogg')
                 pygame.mixer.music.play()
                 return True
 
@@ -51,7 +51,6 @@ class Enemy:
         if self.enemy_y >= 700:
             game.enemies.remove(self)
             return True
-
 
 
 class Game:
@@ -68,7 +67,7 @@ class Game:
     def __init__(self, w, h):  # Constructor
         pygame.init()
         pygame.mixer.init()
-        pygame.mixer.music.load('Audio/start.ogg')
+        pygame.mixer.music.load('audio/start.ogg')
         pygame.mixer.music.play()
         self.w = w
         self.h = h
@@ -89,12 +88,12 @@ class Game:
             if date.seconds >= 1.3:
                 self.enemies.append(Enemy(self, random.randint(1, 800), enemy.enemy_y))
                 self.time = dt.datetime.now()
-            f1 = pygame.font.SysFont('serif', 16)
-            text1 = f1.render("Score:" + str(self.score_value), True,
+            f1 = pygame.font.SysFont('serif', 20)
+            text1 = f1.render("Score: " + str(self.score_value), True,
                               self.YELLOW)
             self.screen.blit(text1, (820, 670))
-            f2 = pygame.font.SysFont('serif', 16)
-            text2 = f2.render("Life:" + str(self.life), True,
+            f2 = pygame.font.SysFont('serif', 20)
+            text2 = f2.render("Life: " + str(self.life), True,
                               self.YELLOW)
             self.screen.blit(text2, (820, 650))
             ship.show()
@@ -102,30 +101,30 @@ class Game:
             self.screen.fill((0, 0, 0))
             pressed = pygame.key.get_pressed()
             if pressed[pygame.K_LEFT]:
-                ship.ship_x -= 0.50 if ship.ship_x > 20 else 0
+                ship.ship_x -= 0.40 if ship.ship_x > 20 else 0
             elif pressed[pygame.K_RIGHT]:
-                ship.ship_x += 0.50 if ship.ship_x < self.w - 20 else 0
+                ship.ship_x += 0.40 if ship.ship_x < self.w - 20 else 0
             for i in pygame.event.get():
                 if i.type == pygame.QUIT:
                     exit()
                 if i.type == pygame.KEYDOWN and i.key == pygame.K_SPACE:
                     self.bullets.append(Ship(self, ship.gun_x, ship.gun_y))
-                    pygame.mixer.music.load("Audio/laser.ogg")
+                    pygame.mixer.music.load("audio/laser.ogg")
                     pygame.mixer.music.play()
             if self.life == 0:
                 f3 = pygame.font.SysFont('serif', 50)
                 text3 = f3.render("GAME OVER", True,
                                   (255, 0, 0))
                 self.screen.blit(text3, (350, 300))
-                if date.seconds >= 2:
+                if date.seconds >= 1:
                     time.sleep(3)
                     exit()
-            if self.score_value == 30:
+            if self.score_value == 50:
                 f4 = pygame.font.SysFont('serif', 50)
                 text4 = f4.render("YOU WON!", True,
-                                  (255, 0, 0))
+                                  (0, 255, 0))
                 self.screen.blit(text4, (350, 300))
-                if date.seconds >= 2:
+                if date.seconds >= 1:
                     time.sleep(3)
                     exit()
             for bullet in self.bullets:
