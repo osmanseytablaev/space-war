@@ -116,15 +116,17 @@ class Game:
                 text3 = f3.render("GAME OVER", True,
                                   (255, 0, 0))
                 self.screen.blit(text3, (350, 300))
-                if date.seconds >= 1:
+                pygame.mixer.music.load("audio/fail.ogg")
+                pygame.mixer.music.play()
+                if date.seconds >= 2:
                     time.sleep(3)
                     exit()
-            if self.score_value == 50:
+            if self.score_value == 40:
                 f4 = pygame.font.SysFont('serif', 50)
                 text4 = f4.render("YOU WON!", True,
                                   (0, 255, 0))
                 self.screen.blit(text4, (350, 300))
-                if date.seconds >= 1:
+                if date.seconds >= 2:
                     time.sleep(3)
                     exit()
             for bullet in self.bullets:
