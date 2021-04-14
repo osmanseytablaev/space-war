@@ -5,7 +5,7 @@ OS Linux Ubuntu >= 20.04
 
 Python >= 3.8.5
 
-##Install
+## Install
 ```bash
      sudo apt-get install python-pygame
 ```
