@@ -120,7 +120,7 @@ class Game:
                 if date.seconds >= 2:
                     time.sleep(3)
                     exit()
-            if self.score_value == 30:
+            if self.score_value == 40:
                 f4 = pygame.font.SysFont('serif', 50)
                 text4 = f4.render("YOU WON!", True,
                                   (255, 0, 0))
