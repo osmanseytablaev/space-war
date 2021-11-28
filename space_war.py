@@ -33,7 +33,7 @@ class Enemy:
         self.size = 40
 
     def show(self):
-        enemy = pygame.image.load('images/enemy.png')
+        enemy = pygame.image.load('images/enemy1.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 0.45
 
@@ -59,7 +59,7 @@ class Enemy2:
         self.size = 40
 
     def show(self):
-        enemy = pygame.image.load('images/enemy.png')
+        enemy = pygame.image.load('images/enemy2.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 0.50
 
@@ -85,7 +85,7 @@ class Enemy3:
         self.size = 40
 
     def show(self):
-        enemy = pygame.image.load('images/enemy.png')
+        enemy = pygame.image.load('images/enemy3.png')
         self.game.screen.blit(enemy, (self.enemy_x, self.enemy_y))
         self.enemy_y += 1
 
@@ -193,7 +193,7 @@ class Game:
                 if date.seconds >= 2:
                     time.sleep(3)
                     while True:
-                        f5 = pygame.font.SysFont('serif', 45)
+                        f5 = pygame.font.SysFont('serif', 20)
                         text5 = f5.render("LEVEL 2", True,
                                           self.YELLOW)
                         self.screen.blit(text5, (420, 20))
