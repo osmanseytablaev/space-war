@@ -1,4 +1,4 @@
-# SPACE-WAR
+# SPACE-WAR 3.0
 
 ## Requirements
 OS Linux Ubuntu >= 20.04
@@ -16,18 +16,12 @@ Python >= 3.8.5
 
 
 ## Rules game
-В начале игры ты должен выбрать уровень.
-
-Управление: стрелками;
-
-Стрельба: пробел.
-    
-У тебя есть 3 жизни.(На easy и normal)
-
-У тебя есть 2 жизни.(На hard)
-
-Если ты набрал 20 очков ты победил.(На easy сложности)
-
-Если ты набрал 30 очков ты победил.(На normal сложности)
-
-Если ты набрал 40 очков ты победил.(На hard сложности)
+The game has 3 levels
+- Management: arrows;
+- Shooting: Space;
+- You have 3 lives;
+- On the first level, you need to score 20 points;
+- On the second level, you need to score 30 points;
+- And in the third level you need to score 40 points;
+- Win 3 levels and complete the game!
+- Good luck!
